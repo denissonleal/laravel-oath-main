@@ -1,66 +1,82 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Exemplo de Aplicação Laravel com Passport para Login Social
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Este é um projeto de exemplo de uma aplicação Laravel que pode ser usada para login social. Outros projetos podem se autenticar através deste, utilizando o Laravel Passport para a gestão de autenticação OAuth2.
 
-## About Laravel
+## Descrição
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+Esta aplicação Laravel é configurada para servir como um provedor de login social. Ela permite que outras aplicações façam login utilizando OAuth2, gerenciado pelo pacote Laravel Passport. O banco de dados padrão é o SQLite, conforme configurado no arquivo `.env.example`.
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Instalação
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+Para instalar e configurar o projeto, siga os passos abaixo:
 
-## Learning Laravel
+1. Clone o repositório:
+    ```sh
+    git clone https://github.com/denissonleal/laravel-oath-main.git
+    ```
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+2. Instale as dependências do Composer:
+    ```sh
+    composer install
+    ```
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+3. Copie o arquivo `.env.example` para `.env` e configure conforme necessário:
+    ```sh
+    cp .env.example .env
+    ```
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+4. Gere a chave da aplicação:
+    ```sh
+    php artisan key:generate
+    ```
 
-## Laravel Sponsors
+5. Execute as migrações do banco de dados:
+    ```sh
+    php artisan migrate
+    ```
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+## Execução
 
-### Premium Partners
+Para executar o servidor de desenvolvimento, utilize o comando:
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+```sh
+php artisan serve --port 8090
+```
 
-## Contributing
+O servidor estará disponível em [http://localhost:8090](http://localhost:8090).
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+## Criação de Usuário
 
-## Code of Conduct
+Para criar um usuário, você pode usar um seeder ou diretamente no tinker. Exemplo usando tinker:
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+```sh
+php artisan tinker
+```
 
-## Security Vulnerabilities
+Dentro do tinker, crie um usuário:
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+```php
+use App\Models\User;
 
-## License
+User::create([
+    'name' => 'Nome do Usuário',
+    'email' => 'usuario@example.com',
+    'password' => bcrypt('senha-segura'),
+]);
+```
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+## Criação da Chave do Passport
+
+Para configurar o Passport, é necessário criar um client OAuth2. Execute o seguinte comando:
+
+```sh
+php artisan passport:client
+```
+
+Isso gerará um `client_id` e um `client_secret` que devem ser usados pelos aplicativos que desejam se autenticar através desta aplicação.
+
+## Considerações Finais
+
+Agora, sua aplicação está configurada para servir como um provedor de login social utilizando Laravel Passport. Outras aplicações podem usar o `client_id` e `client_secret` gerados para integrar a autenticação OAuth2.
+
+Para mais informações sobre Laravel e Passport, consulte a [documentação oficial do Laravel](https://laravel.com/docs) e a [documentação do Passport](https://laravel.com/docs/passport).
