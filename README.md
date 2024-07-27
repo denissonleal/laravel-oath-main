@@ -13,6 +13,7 @@ Para instalar e configurar o projeto, siga os passos abaixo:
 1. Clone o repositório:
     ```sh
     git clone https://github.com/denissonleal/laravel-oath-main.git
+    cd laravel-oath-main/
     ```
 
 2. Instale as dependências do Composer:
