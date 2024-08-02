@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Models\PassportClient;
 use Illuminate\Support\ServiceProvider;
 use Laravel\Passport\Passport;
 
@@ -22,5 +23,6 @@ class AppServiceProvider extends ServiceProvider
     {
         //
         Passport::hashClientSecrets();
+        Passport::useClientModel(PassportClient::class);
     }
 }
